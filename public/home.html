@@ -18,31 +18,53 @@
 	<div>
 	<form method="post" action="/processsignup/" class="userform">
     <h4> <a href="/" ><b style="float:left;" class="activea">Sign Up</b></a> <a href="/signin"><b style="float:right;">Sign In</b></a></h4> <br><br>
+      <div class="form-group">
+    <input type="email" name="email" id="email" placeholder="Email" class="form-control" required>
+        </div>
+        <div class="form-group">
+        <input type="password" name="password" id="pass" placeholder="Password" class="form-control" required>
+        </div>
+        <div class="form-group">
+        <input type="password" name="comfirmpassword" id="cpass" placeholder="Confirm Password" class="form-control" required>
+        <span id="span" style="font-size:12px;"></span>
+        </div>
     	<div class="form-group">
 		<input type="text" name="name" placeholder="Firstname Lastname" class="form-control" required>
         </div>
-        <div class="form-group">
-		<input type="email" name="email" placeholder="Email" class="form-control" required>
-        </div>
+        
         <div class="form-group">
 		<input type="text" name="phone" placeholder="Phone No" class="form-control" required>
         </div>
-        <div class="form-group">
-        <input type="password" name="password" placeholder="Password" class="form-control" required>
-        </div>
-        <div class="form-group">
-        <input type="password" name="comfirmpassword" placeholder="Confirm Password" class="form-control" required>
-        </div>
+        
         <div class="form-group">
         <input type="file" name="phone" placeholder="Confirm Password" class="form-control" required>
         </div>
         <div class="form-group">
-		<input type="submit" name="submit" value="Sign Up" class="form-control btn btn-success" required>
+		<input type="submit" name="submit" value="Sign Up" class="form-control btn btn-success" id="subbtn" required disabled>
         </div>
 	</form>
     </div>
    
     </div>
 </div>
+<script type="text/javascript">
+$("#cpass").blur(function(){
+   var cpass = $("#cpass").val();
+   var pass = $("#pass").val();
+   var mail = $("#email").val();
+   if (cpass == pass){
+      $("#subbtn").removeAttr("disabled");
+	  $("#span").html("Password Matches");
+   }
+   else {
+      $("#span").html("Password Mismatch");
+   }
+   
+
+});
+  
+  
+
+</script>
 </body>
 </html>

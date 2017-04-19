@@ -7,17 +7,90 @@
   <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/jquery-ui.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+	  $(function() {
+            $( "#formdialog" ).dialog({
+               autoOpen: false,
+			   modal: true,
+			   hide: "puff",
+               show : "slide",
+               width: 400    
+            });
+            $( "#opendialog" ).click(function() {
+               $( "#formdialog" ).dialog( "open" );
+            });
+         });
+    
+});
+  </script>
 </head>
 <body style="background-image:url(/images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
 <div>
 <div class="heada"><h3>Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3></div>
+	<div class="row" style="padding-left:5%;">
+    	<div style="border:1px solid red; width:25%; margin-right:5%;">
+        <h4> Profile </h4>
+        
+        
+        <div style="text-align:center;"><button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<button class="btn btn-success">Log Out</button></div>
+        </div>
+        <div style="border:1px solid red; width:60%">
+        <h4> Ideas </h4>
+        
+        
+        </div>
+    
+    
+    </div>
 
-<div class="formcont">
-	
+    
+    <div class="formcont" style=" margin-top:0px; margin-left:0px; width:500px; " id="formdialog" title=" Add an Idea ">
+  <form method="post" action="/addidea/" class="userform" style="width:100%; ">
+    <h4> <a href="/" ><b style="float:left;" class="activea"></b></a> </h4> <br><br>
+      <div class="form-group">
+    <input type="text" name="title" id="title" placeholder="Title" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <select class="form-control" id="category" name="category" required>
+              <option>Category</option>
+              <option>Technology</option>
+              <option>Music</option>
+              <option>Business</option>
+          </select>
+        </div>
+        <div class="form-group">
+        <textarea name="description" id="description" class="form-control" required> Description </textarea>
+        </div>
+        <div class="form-group">
+    <input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="addbtn" required>
+        </div>
+  </form>
+    </div>
    
     </div>
 </div>
+<script>	
+	$("#addbtn").click(function(e){
+    	event.preventDefault(e);
+      var title = $("#title").val();
+      var category = $("#category").val();
+	  var description = $("#description").val();
+        //$.post('/processsignin/',{email:email,password:password}, function(r){
+          alert(title + " " + category + " " + description);
+          
+        //} );
+		
+		$("#formdialog").close();
+
+    });
+  
+
+
+</script>
 </body>
 </html>

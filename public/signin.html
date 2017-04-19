@@ -17,20 +17,44 @@
 
 
 <div class="formcont">
+<span id='err' style=" margin-left:8%; font-size:18px; color: red;"></span>
 	<div>
-	<form method="post" action="/processsignin/" class="userform">
+	<form method="post" action="" class="userform" id="#form">
     <h4> <a href="/"><b style="float:left;">Sign Up</b></a> <a href="/signin"><b style="float:right;"  class="activea">Sign In</b></a></h4> <br><br>
         <div class="form-group">
-		<input type="email" name="email" placeholder="Email" class="form-control" required>
+		<input type="email" name="email" placeholder="Email" id="email" class="form-control" required>
         </div>
         <div class="form-group">
-        <input type="password" name="password" placeholder="Password" class="form-control" required>
+        <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
         </div>
         <div class="form-group">
-		<input type="submit" name="submit" value="Sign In" class="form-control  btn btn-success">
+		<input type="submit" name="submit" value="Sign In" id="btn" class="form-control  btn btn-success">
         </div>
         <a href="/passreset"><b> Forgot your password? </b></a>
 	</form>
+  <script type="text/javascript">
+    $("#btn").click(function(e){
+    	event.preventDefault(e);
+      var email = $("#email").val();
+      var password = $("#password").val();
+        $.post('/processsignin/',{email:email,password:password}, function(r){
+          alert(r);
+          if (r == "auth/wrong-password" || r == "auth/user-not-found" ){
+             $("#err").html("Password or Email not Correct !!!");
+
+          }
+		  else if (r == "auth/invalid-email" ){
+			   $("#err").html("Password or Email empty !!!");
+		  }
+          else{
+              alert ("Login Successful")
+            window.location = 'idea'
+          }
+        } );
+
+    });
+  
+  </script>
 </div>
     </div>
 </div>
