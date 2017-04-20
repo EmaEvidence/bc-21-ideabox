@@ -16,7 +16,7 @@
 
 <div class="formcont">
 	<div>
-	<form method="post" action="/processsignup/" class="userform">
+	<form method="post" action="/processsignup/" class="userform" id="regform" enctype="multipart/form-data">
     <h4> <a href="/" ><b style="float:left;" class="activea">Sign Up</b></a> <a href="/signin"><b style="float:right;">Sign In</b></a></h4> <br><br>
       <div class="form-group">
     <input type="email" name="email" id="email" placeholder="Email" class="form-control" required>
@@ -29,16 +29,13 @@
         <span id="span" style="font-size:12px;"></span>
         </div>
     	<div class="form-group">
-		<input type="text" name="name" placeholder="Firstname Lastname" class="form-control" required>
+		<input type="text" name="name" placeholder="Firstname Lastname" class="form-control" required id="name">
         </div>
         
         <div class="form-group">
-		<input type="text" name="phone" placeholder="Phone No" class="form-control" required>
+		<input type="text" name="phone" placeholder="Phone No" class="form-control" required id="phone">
         </div>
         
-        <div class="form-group">
-        <input type="file" name="phone" placeholder="Confirm Password" class="form-control" required>
-        </div>
         <div class="form-group">
 		<input type="submit" name="submit" value="Sign Up" class="form-control btn btn-success" id="subbtn" required disabled>
         </div>
@@ -62,9 +59,26 @@ $("#cpass").blur(function(){
    
 
 });
-  
-  
-
+$("#subbtn").click(function(e){
+    event.preventDefault(e);
+	var email = $("#email").val();
+    var password = $("#pass").val();
+	var name = $("#name").val();
+    var phone = $("#phone").val();
+	 $.post('/processsignup/',{email:email,password:password,name:name,phone:phone}, function(r){
+    if (r == email){
+      alert ("Registration Successful.")
+      window.location = 'idea';
+      
+       
+    }
+    else{
+      alert (r);
+    }
+	 });
+      
+});
+ 
 </script>
 </body>
 </html>

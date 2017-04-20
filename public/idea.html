@@ -13,6 +13,7 @@
   <script src="/js/jquery-ui.js"></script>
   <script type="text/javascript">
   $(document).ready(function() {
+    
 	  $(function() {
             $( "#formdialog" ).dialog({
                autoOpen: false,
@@ -25,22 +26,33 @@
                $( "#formdialog" ).dialog( "open" );
             });
          });
+    //getting userdata
+      $.post('/getuser',{},function(res){
+        //alert(res);
+        document.getElementById('userd').innerHTML += res;
+
+      });
+
+    //getting userdata
     
 });
+
   </script>
 </head>
 <body style="background-image:url(/images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
 <div>
 <div class="heada"><h3>Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3></div>
 	<div class="row" style="padding-left:5%;">
-    	<div style="border:1px solid red; width:25%; margin-right:5%;">
+    	<div style="border:1px solid red; width:25%; margin-right:5%; height:400px; box-shadow:; padding: 5px;">
         <h4> Profile </h4>
+        <b id="userd"></b>
         
         
-        <div style="text-align:center;"><button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<button class="btn btn-success">Log Out</button></div>
+        <div style="text-align:center;"><button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<a href="/logout" ><button class="btn btn-success">Log Out</button></a></div>
         </div>
         <div style="border:1px solid red; width:60%">
         <h4> Ideas </h4>
+
         
         
         </div>
@@ -66,8 +78,9 @@
         <div class="form-group">
         <textarea name="description" id="description" class="form-control" required> Description </textarea>
         </div>
+        <input type="hidden" name="title" id="usertoken" placeholder="Title" class="form-control" required>
         <div class="form-group">
-    <input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="addbtn" required>
+    <input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="addbtn" disabled>
         </div>
   </form>
     </div>
@@ -75,20 +88,69 @@
     </div>
 </div>
 <script>	
+  var i = window.localStorage.getItem('userid');
+  document.getElementById('usertoken').value = i;
+  $.ajax({
+        type:"GET",
+        url: "https://bc-21-noticeboard.firebaseio.com/-KhbI5UvglwvMw0zqAcU/Post.json"
+    }).then(function(data) {
+      var dat = JSON.stringify(data)
+       //document.getElementById('userd').innerHTML = dat;
+       //console.log(data);
+    });
+  document.getElementById('userd').innerHTML = i;
+
+  // Add idea dialog box
 	$("#addbtn").click(function(e){
     	event.preventDefault(e);
       var title = $("#title").val();
       var category = $("#category").val();
-	  var description = $("#description").val();
-        //$.post('/processsignin/',{email:email,password:password}, function(r){
-          alert(title + " " + category + " " + description);
+	    var description = $("#description").val();
+      var userToken = $("#usertoken").val(); 
+      var time = new Date();  
+        $.post('/addidea/',{title:title,category:category,description:description,usertoken:userToken, time:time}, function(r){
+			
+          alert(r);
           
-        //} );
+        });
 		
-		$("#formdialog").close();
+		$("#formdialog").dialog('close');
 
     });
+  // Add idea dialog box
+  //validating idea dialog box
+	function valid(){
+		var title = $("#title").val();
+    var category = $("#category").val();
+	  var description = $("#description").val();
+		if ((title != " " && category != " ") && (description != " "))
+		{
+			$("#addbtn").removeAttr("disabled");
+		}
+		else{
+			$("#addbtn").attr("disable",true);
+		}
+	}
+	$("#title").blur( function (){
+		valid();
+	});
+	$("#category").change( function (){
+		valid();
+	});
+	$("#description").keypress( function (){
+		valid();
+	});
+	$("#description").blur( function (){
+		valid();
+	});
   
+//validating idea dialog box
+
+//getting ideas
+
+
+//getting ideas
+
 
 
 </script>

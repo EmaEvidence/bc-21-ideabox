@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="css/index.css">
   <script src="js/jquery-1.11.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#errbox").hide();
+    })
+  </script>
 </head>
 <body style="background-image:url(images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
 <div>
@@ -17,7 +22,6 @@
 
 
 <div class="formcont">
-<span id='err' style=" margin-left:8%; font-size:18px; color: red;"></span>
 	<div>
 	<form method="post" action="" class="userform" id="#form">
     <h4> <a href="/"><b style="float:left;">Sign Up</b></a> <a href="/signin"><b style="float:right;"  class="activea">Sign In</b></a></h4> <br><br>
@@ -26,6 +30,9 @@
         </div>
         <div class="form-group">
         <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
+        </div>
+        <div class="alert alert-danger" role="alert" id="errbox">
+        <span id='err' style=" margin-left:8%; font-size:18px; color: red;"></span>
         </div>
         <div class="form-group">
 		<input type="submit" name="submit" value="Sign In" id="btn" class="form-control  btn btn-success">
@@ -38,17 +45,20 @@
       var email = $("#email").val();
       var password = $("#password").val();
         $.post('/processsignin/',{email:email,password:password}, function(r){
-          alert(r);
+          //alert(r);
           if (r == "auth/wrong-password" || r == "auth/user-not-found" ){
+            $("#errbox").show();
              $("#err").html("Password or Email not Correct !!!");
 
           }
 		  else if (r == "auth/invalid-email" ){
+         $("#errbox").show();
 			   $("#err").html("Password or Email empty !!!");
 		  }
           else{
-              alert ("Login Successful")
-            window.location = 'idea'
+              alert ("Login Successful");
+              window.localStorage.setItem('userid', r);
+            window.location = 'idea';
           }
         } );
 
