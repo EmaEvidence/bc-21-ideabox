@@ -6,12 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
   <script src="/js/jquery-1.11.1.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/jquery-ui.js"></script>
   <script type="text/javascript">
+  var i = window.localStorage.getItem('userid');
   $(document).ready(function() {
     
 	  $(function() {
@@ -27,31 +29,42 @@
             });
          });
     //getting userdata
-      $.post('/getuser',{},function(res){
-        //alert(res);
-        document.getElementById('userd').innerHTML += res;
-
-      });
+     
 
     //getting userdata
     
 });
 
   </script>
+  <style>
+
+  
+  </style>
 </head>
 <body style="background-image:url(/images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
 <div>
 <div class="heada"><h3>Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3></div>
-	<div class="row" style="padding-left:5%;">
-    	<div style="border:1px solid red; width:25%; margin-right:5%; height:400px; box-shadow:; padding: 5px;">
+	<div class="row" style="padding-left:5%; text-align: center;">
+
+    	<div style=" border-radius:5px; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  width:25%; margin-right:5%; height:400px; box-shadow:; padding: 5px;">
+      <img src="images/bgimg.fw.png" width="100px" height="100px" style="border:1px solid green; border-radius:10px;"><br>
+	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+      <p> Welcome <b id="userd"></b> to ideabox </p>
         <h4> Profile </h4>
-        <b id="userd"></b>
         
         
-        <div style="text-align:center;"><button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<a href="/logout" ><button class="btn btn-success">Log Out</button></a></div>
+        
+        <div style="text-align:center;"><button class="btn btn-success">My Ideas</button>&nbsp;&nbsp;<button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<a href="/logout" ><button class="btn btn-success">Log Out</button></a></div>
         </div>
-        <div style="border:1px solid red; width:60%">
-        <h4> Ideas </h4>
+        <div style=" width:60%">
+        <h4> Ideas Board </h4>
+        <div id="displayIdeas">
+        
+        </div>
+        <div>
+        	<img src="images/tumblr_nak5muSmwi1r2geqjo1_500.gif" width="200px" height="200px" />
+        
+        </div>
 
         
         
@@ -88,18 +101,6 @@
     </div>
 </div>
 <script>	
-  var i = window.localStorage.getItem('userid');
-  document.getElementById('usertoken').value = i;
-  $.ajax({
-        type:"GET",
-        url: "https://bc-21-noticeboard.firebaseio.com/-KhbI5UvglwvMw0zqAcU/Post.json"
-    }).then(function(data) {
-      var dat = JSON.stringify(data)
-       //document.getElementById('userd').innerHTML = dat;
-       //console.log(data);
-    });
-  document.getElementById('userd').innerHTML = i;
-
   // Add idea dialog box
 	$("#addbtn").click(function(e){
     	event.preventDefault(e);
@@ -151,8 +152,60 @@
 
 //getting ideas
 
+ $.post('/getuser',{tok:i},function(res){
+        var keey = Object.keys(res);
+        var userKey = res[keey];
+        var phone = userKey["phone"];
+        var name = userKey["username"];
+        document.getElementById('userd').innerHTML = name;
 
+      });
+	  function getIdeas(){
+$.post('/getideas',{},function(res){
+		var cont = "";
+		var objectKeys = Object.keys(res);
+		var objectLength = objectKeys.length;
+		for (a =0; a < objectLength; a++){
+			var b = objectKeys[a];
+			cont = res[b];
+			var title,date,upv,downv,desc,cat,downv,comm;
+			Object.keys(cont).forEach(function(key) {
+				if(key == "title"){
+					title = cont[key];					
+				}
+				else if(key == "date")
+				{
+					date = cont[key];	
+				}
+				else if(key == "upvote"){
+					upv = cont[key];
+				}
+				else if(key == "description"){
+					desc = cont[key];
+					}
+				else if(key == "category"){
+					cat = cont[key];
+					}
+				else if(key == "downvote"){
+					downv = cont[key];
+					}
+				else{
+					comm = "";	
+					}
+			});
+      var display = "<div class='jumbotron ideacont' style=''><h5 class='well ideatitle'>" +title+ "</h5><div class='well ideadesc'>"+desc+ "</div><div class='ideacomment'>"+comm+"</div><i><h6 class='ideadetails'>"+cat+ ", "+date+" by Author</h6></i><div><button class='ideauvote'>Upvotes"+ upv+ "</button><button class='ideadvote'>Downvotes"+ downv+ "</button></div><div class='ideacomment'>comments</div><div class='newcomment'><textarea id='addcomm'></textarea><br><button>Add Comment</button></div></div>";
+        document.getElementById('displayIdeas').innerHTML += display +"<br>";
+			
+				
+			  
+		}
+			      
+        
 
+      });
+	  }
+	  getIdeas();
+	  //setInterval("getIdeas",1000);
 </script>
 </body>
 </html>
