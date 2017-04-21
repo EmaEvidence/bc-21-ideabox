@@ -32,8 +32,9 @@
         <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
         </div>
         <div class="alert alert-danger" role="alert" id="errbox">
-        <span id='err' style=" margin-left:8%; font-size:18px; color: red;"></span>
+        <span id='err' style=" margin-left:8%; font-size:18px; color: red; text-align:center;"></span>
         </div>
+
         <div class="form-group">
 		<input type="submit" name="submit" value="Sign In" id="btn" class="form-control  btn btn-success">
         </div>
@@ -42,6 +43,8 @@
   <script type="text/javascript">
     $("#btn").click(function(e){
     	event.preventDefault(e);
+		$("#err").html("<img src='images/bgLoad.gif' width='100' height='15'>");
+		 $("#errbox").show();
       var email = $("#email").val();
       var password = $("#password").val();
         $.post('/processsignin/',{email:email,password:password}, function(r){

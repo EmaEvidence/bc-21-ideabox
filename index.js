@@ -146,7 +146,8 @@ app.post('/addidea/',function (req,res) {
 	var title = req.body.title;
 	var category = req.body.category;
 	var description = req.body.description;
-	var userToken = req.body.usertoken;
+	var user = firebase.auth().currentUser;
+	var userToken = user.uid;
 	var time = req.body.time;
 	var data = 
 	{		userid: userToken,
@@ -157,8 +158,7 @@ app.post('/addidea/',function (req,res) {
 		    downvote: 0,
 		    date: time,
 		    comment : {
-		    	commentid:0,
-		    	comment:0,
+		    	userid:{ comment: " ", time: " ", commenter:" "}
 		    }
   		};
 		  	//firebase.database().ref('user/'+userId ).set(data);
@@ -186,7 +186,7 @@ app.post('/addidea/',function (req,res) {
 		//console.log(userIdd);
 		var db = admin.database();
 		var ref = db.ref("/user").orderByKey().equalTo(userIdd);;
-	ref.once("value", function(snapshot) {
+	ref.on("value", function(snapshot) {
   		console.log(snapshot.val());
   		res.send(snapshot.val());
 	
@@ -251,3 +251,44 @@ app.post('/vote',function (req,res) {
 });
 
 //routing for votes
+//routing for getting idea poster
+	app.post('/ideaposter',function (req,res) {
+		var userIdd = req.body.tok;
+		//console.log(userIdd);
+		var db = admin.database();
+		var ref = db.ref("/user").orderByKey().equalTo(userIdd);;
+	ref.on("value", function(snapshot) {
+  		console.log(snapshot.val());
+  		res.send(snapshot.val());
+	
+	}, function (errorObject) {
+  		console.log("The read failed: " + errorObject.code);
+  		res.send("The read failed: " + errorObject.code);
+});
+		
+});
+//routing for getting user idea poster
+
+//routing for adding comments to ideas
+app.post('/addcomment',function (req,res) {
+		var user = firebase.auth().currentUser;
+		var userToken = user.uid;
+		var comment = req.body.comment;
+		var date = req.body.date;
+		var ideaId = req.body.ideaId;
+		var data = 
+			{		
+		    	comment: comment, time: date, commenter:userToken
+		    } 
+		firebase.database().ref('ideas/'+ideaId+'/comment').push().set(data)
+		.then(userData => { 
+				//return res.redirect('/idea');
+				console.log("Updated");
+				res.send("Added");
+			})
+		//res.send(userToken + comment + date + ideaId);
+		
+		
+});
+
+//routing for getting comments to ideas
