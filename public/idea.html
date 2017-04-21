@@ -4,13 +4,12 @@
   <title>Ideabox</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="/css/bootstrap-grid.min.css">
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
-  <script src="/js/jquery-1.11.1.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/js/jquery-ui.js"></script>
   <script type="text/javascript">
   var i = window.localStorage.getItem('userid');
@@ -41,12 +40,12 @@
   
   </style>
 </head>
-<body style="background-image:url(/images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
+<body style="background-image:url(/images/bgimg.jpg); background-size:contain; background-repeat:no-repeat;">
 <div>
 <div class="heada"><h3>Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3></div>
 	<div class="row" style="padding-left:5%; text-align: center;">
 
-    	<div style=" border-radius:5px; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  width:25%; margin-right:5%; height:400px; box-shadow:; padding: 5px;">
+    	<div class="col-sm-4" style=" border-radius:5px; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  width:25%; margin-right:5%; height:270px; box-shadow:; padding: 5px; margin-top:5%;">
       <img src="images/bgimg.fw.png" width="100px" height="100px" style="border:1px solid green; border-radius:10px;"><br>
 	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
       <p> Welcome <b id="userd"></b> to ideabox </p>
@@ -56,7 +55,7 @@
         
         <div style="text-align:center;"><button class="btn btn-success">My Ideas</button>&nbsp;&nbsp;<button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<a href="/logout" ><button class="btn btn-success">Log Out</button></a></div>
         </div>
-        <div style=" width:60%">
+        <div class="col-sm-7" style="width:60%">
         <h4> Ideas Board </h4>
         <div id="displayIdeas">
         
@@ -165,6 +164,7 @@ $.post('/getideas',{},function(res){
 		var cont = "";
 		var objectKeys = Object.keys(res);
 		var objectLength = objectKeys.length;
+		var v = 1;
 		for (a =0; a < objectLength; a++){
 			var b = objectKeys[a];
 			cont = res[b];
@@ -193,10 +193,10 @@ $.post('/getideas',{},function(res){
 					comm = "";	
 					}
 			});
-      var display = "<div class='jumbotron ideacont' style=''><h5 class='well ideatitle'>" +title+ "</h5><div class='well ideadesc'>"+desc+ "</div><div class='ideacomment'>"+comm+"</div><i><h6 class='ideadetails'>"+cat+ ", "+date+" by Author</h6></i><div><button class='ideauvote'>Upvotes"+ upv+ "</button><button class='ideadvote'>Downvotes"+ downv+ "</button></div><div class='ideacomment'>comments</div><div class='newcomment'><textarea id='addcomm'></textarea><br><button>Add Comment</button></div></div>";
+      var display = "<div class='ideacont' style=''><h3 class='ideatitle'>" +title+ "</h3><div class='well well-lg ideadesc'>"+desc+ "</div><div class='ideacomment'>"+comm+"</div><i><h6 class='ideadetails'>"+cat+ ", "+date+" by Author</h6></i><div><button class='btn-sm btn-success ideauvote' onclick='upvote("+v+","+upv+")' >Upvotes "+ upv+ "</button>&nbsp;<button class='btn-sm btn-warning ideadvote' onclick='downvote("+v+","+downv+")'id='dwv"+v+"'>Downvotes "+ downv+ "</button></div><div class='ideacomment'>comments</div><div class='newcomment'><textarea class='form-control' id='addcomm'></textarea><br><button class='btn-sm btn-warning'>Add Comment</button></div></div><input type='hidden' value='"+b+"' id='ideaid"+v+"'"+ b;
         document.getElementById('displayIdeas').innerHTML += display +"<br>";
 			
-				
+			v++;	
 			  
 		}
 			      
@@ -206,6 +206,34 @@ $.post('/getideas',{},function(res){
 	  }
 	  getIdeas();
 	  //setInterval("getIdeas",1000);
+	  //Voting
+	  function upvote(a,b){
+		  //alert(a);
+		  //alert(b);
+		 var ideaId = $("#ideaid"+a).val();
+		// alert (ideaId);
+		 b +=1;
+	  $.post('/vote',{v:'up',ideaId:ideaId,vote:b},function(r){
+		  alert(r);
+		  if(r =="voted"){
+			 window.location = '/idea'; 
+		  }
+		  
+	  });
+	  };
+	  function downvote(a,b){
+		  //alert(a);
+		  //alert(b);
+		  //alert (1234);
+		 var ideaId = $("#ideaid"+a).val();
+		// alert (ideaId);
+		 b +=1
+	  $.post('/vote',{v:'down',ideaId:ideaId,vote:b},function(r){
+		  alert(r);
+		   window.location = '/idea'; 
+		  
+	  });
+	  };
 </script>
 </body>
 </html>

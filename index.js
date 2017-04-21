@@ -186,7 +186,7 @@ app.post('/addidea/',function (req,res) {
 		//console.log(userIdd);
 		var db = admin.database();
 		var ref = db.ref("/user").orderByKey().equalTo(userIdd);;
-	ref.on("value", function(snapshot) {
+	ref.once("value", function(snapshot) {
   		console.log(snapshot.val());
   		res.send(snapshot.val());
 	
@@ -202,14 +202,52 @@ app.post('/addidea/',function (req,res) {
 	app.post('/getideas',function (req,res) {
 		var db = admin.database();
 		var ref = db.ref("/ideas").orderByKey();
-	ref.on("value", function(snapshot) {
-  		console.log(snapshot.val());
+	ref.once("value", function(snapshot) {
+  		//console.log(snapshot.val());
   		res.send(snapshot.val());
 	
 	}, function (errorObject) {
-  		console.log("The read failed: " + errorObject.code);
+  		//console.log("The read failed: " + errorObject.code);
   		//res.send("The read failed: " + errorObject.code);
 });
 		
 });
 //routing for getting ideas
+
+//routing for votes
+app.post('/vote',function (req,res) {
+	var voteType = req.body.v;
+	var ideaId = req.body.ideaId;
+	var vote = req.body.vote;
+	var user = firebase.auth().currentUser;
+	var uidd = user.uid;
+	
+	if (voteType =='up'){
+		var data = 
+			{		
+		    upvote: vote,
+		    } 
+		firebase.database().ref('ideas/'+ideaId).update(data)
+		.then(userData => { 
+				console.log("Updated");
+				res.send("voted");
+			})
+		
+	}
+	else{
+		var data = 
+			{		
+		    downvote: vote,
+		    } 
+		firebase.database().ref('ideas/'+ideaId).update(data)
+		.then(userData => { 
+				//return res.redirect('/idea');
+				console.log("Updated");
+				res.send("voted");
+			})
+
+	}
+		
+});
+
+//routing for votes
