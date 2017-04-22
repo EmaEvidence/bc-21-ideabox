@@ -1,10 +1,13 @@
 {
-  "name": "project",
+  "name": "bc21-ideabox",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.9.4"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node index.js"
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

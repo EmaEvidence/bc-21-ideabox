@@ -37,8 +37,7 @@
 
 //routng for gets
 		app.get('/',function (req,res) {
-			//res.sendFile(path.join(__dirname+'/public/index.html'))	;
-			res.render('index',{ title: 'Hey Hey Hey!', message: 'Yo Yo'});
+			res.sendFile(path.join(__dirname+'/public/index.html'))	;
 		});
 
 
