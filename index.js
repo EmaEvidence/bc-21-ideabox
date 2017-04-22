@@ -4,15 +4,8 @@
 		var firebase = require("firebase");
 		var fs = require('fs');
 		var bodyParser = require('body-parser');
-		var admin = require("firebase-admin");
 		var markdown = require( "markdown" ).markdown;
-		var serviceAccount = require("sdk/serviceAccountKey.json");
-
-
-		admin.initializeApp({
-		  credential: admin.credential.cert(serviceAccount),
-		  databaseURL: "https://ideaboxaa.firebaseio.com"
-		});
+		//var serviceAccount = require("sdk/serviceAccountKey.json");
 
 
 		var config = {
@@ -166,8 +159,7 @@
 //routing for getting user
 		app.post('/getuser',function (req,res) {
 			let userIdd = req.body.tok;
-			let db = admin.database();
-			let ref = db.ref("/user").orderByKey().equalTo(userIdd);;
+			let ref = firebase.database().ref("/user").orderByKey().equalTo(userIdd);;
 			ref.on("value", function(snapshot) {
   				console.log(snapshot.val());
   				res.send(snapshot.val());
@@ -180,8 +172,7 @@
 
 //routing for getting ideas
 		app.post('/getideas',function (req,res) {
-			let db = admin.database();
-			let ref = db.ref("/ideas").orderByKey();
+			let ref = firebase.database().ref("/ideas").orderByKey();
 			ref.once("value", function(snapshot) {
   				res.send(snapshot.val());
 			}, function (errorObject) {
@@ -223,8 +214,7 @@
 //routing for getting idea poster
 		app.post('/ideaposter',function (req,res) {
 			let userIdd = req.body.tok;
-			let db = admin.database();
-			let ref = db.ref("/user").orderByKey().equalTo(userIdd);;
+			let ref = firebase.database().ref("/user").orderByKey().equalTo(userIdd);;
 			ref.on("value", function(snapshot) {
   				console.log(snapshot.val());
   				res.send(snapshot.val());
