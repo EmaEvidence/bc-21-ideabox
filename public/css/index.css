@@ -1,12 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
+header { width:100%;
+		 padding:0px;
+		 margin-top:-3px;
+		 font-family:"Comic", sans-serif; 
+		 box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.2); 
+		 background:#FFF; 
+		 z-index:10; 
+		 position:fixed;
+		 text-align:center;}
 .heada { box-shadow: 1px 2px 1px 0 rgba(0, 0,0 , 0.2);
 		 text-align:center;
 		 padding:0%;
 		 color:#090;}
 .heada h3 { font-size:50px;}
 .formcont { margin-left:38%;
-			margin-top:10%; 
+			margin-top:5%; 
 			width:40%;}
 .userform { width:60%;}
 
@@ -21,6 +30,28 @@ h4 a { color:#090; font-weight:200;}
 			opacity:0.7; }
 .ideacont:hover { opacity:1;}
 .ideatitle { border:1px #0F6;}
+.commenttitle { text-decoration:underline;}
+.commentbody { background-color:#CCC;
+				border-radius:2px;}
+.ideadesc { font-size:18px;}
+.ideadetails {margin:2px;}
+.commentdetails { margin:2px;}
+#profilewrap {border-radius:5px;
+			  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  
+			  width:25%; 
+			  margin-right:5%; 
+			  height:auto; 
+			  padding: 5px;
+			  margin-top:8%;
+			  text-align:center;
+			  position:fixed;
+			  background:#FFF;}
+#profilewrap img {border:1px solid green;
+			  border-radius:10px;}
+#err {  margin-left:8%;
+		font-size:18px; 
+		color: red; 
+		text-align:center;}
 
 
 

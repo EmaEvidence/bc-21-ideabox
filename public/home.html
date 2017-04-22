@@ -13,9 +13,13 @@
 <body style="background-image:url(images/bgimg.jpg); background-size:cover; background-repeat:no-repeat;">
 <div>
 <div class="heada"><h3>Ideabox<img src="images/logo.gif" width="50px" height="50px" /></h3></div>
-
-<div class="formcont">
+	<div style="text-align:center; margin-top:3%;">
+    <h4> Welcome </h4>
+    <h5>Do you Have an Idea? Recieve a free Feasibility Study on it. Add your ideas and recieve mentorship from great minds.</h5>
+    <h5>If you have an account please proceed to the Sign In Page or Click <a href="/signin">Here</a></h5>
+    </div>
 	<div>
+<div class="formcont">
 	<form method="post" action="/processsignup/" class="userform" id="regform" enctype="multipart/form-data">
     <h4> <a href="/" ><b style="float:left;" class="activea">Sign Up</b></a> <a href="/signin"><b style="float:right;">Sign In</b></a></h4> <br><br>
       <div class="form-group">
@@ -44,41 +48,42 @@
    
     </div>
 </div>
+<div style="text-align:center;">
+	<h6> &copy; 2017 EmaEvidence </h6>
+</div>
 <script type="text/javascript">
-$("#cpass").blur(function(){
-   var cpass = $("#cpass").val();
-   var pass = $("#pass").val();
-   var mail = $("#email").val();
-   if (cpass == pass){
+  $("#cpass").blur(function() {
+    const cpass = $("#cpass").val();
+    const pass = $("#pass").val();
+    const mail = $("#email").val();
+    if (cpass == pass) {
       $("#subbtn").removeAttr("disabled");
-	  $("#span").html("Password Matches");
-   }
-   else {
+	    $("#span").html("Password Matches");
+    }
+    else {
       $("#span").html("Password Mismatch");
-   }
-   
+    }
+  });
 
-});
-$("#subbtn").click(function(e){
+
+  $("#subbtn").click(function(e) {
     event.preventDefault(e);
-	var email = $("#email").val();
+	  var email = $("#email").val();
     var password = $("#pass").val();
-	var name = $("#name").val();
+	  var name = $("#name").val();
     var phone = $("#phone").val();
-	 $.post('/processsignup/',{email:email,password:password,name:name,phone:phone}, function(r){
-    if (r == email){
+	  $.post('/processsignup/',{email:email,password:password,name:name,phone:phone}, function(r){
+      if (r == email) {
       alert ("Registration Successful.")
-      window.location = 'idea';
-      
-       
-    }
-    else{
+      window.location = 'idea';  
+      }
+      else {
       alert (r);
-    }
-	 });
-      
-});
- 
+      }
+	 });  
+  }); 
+
+
 </script>
 </body>
 </html>

@@ -4,251 +4,142 @@
   <title>Ideabox</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/index.css">
   <link rel="stylesheet" type="text/css" href="/css/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/js/jquery-ui.js"></script>
+  <script src="js/markdown.js"></script>
   <script type="text/javascript">
+
   var i = window.localStorage.getItem('userid');
   $(document).ready(function() {
-    
-	  $(function() {
-            $( "#formdialog" ).dialog({
-               autoOpen: false,
-			   modal: true,
-			   hide: "puff",
-               show : "slide",
-               width: 400    
-            });
-            $( "#opendialog" ).click(function() {
-               $( "#formdialog" ).dialog( "open" );
-            });
-         });
-    //getting userdata
-     
-
-    //getting userdata
-    
+    $("#formdialog").dialog({
+      autoOpen: false,
+		  modal: true,
+		  hide: "puff",
+      show : "slide",
+      width: 400    
+    });
+		
+    $("#uploaddialog").dialog({
+      autoOpen: false,
+			modal: true,
+			hide: "puff",
+      show : "slide",
+      width: 200    
+    });
+			
+ 
+    $(".opendialog").click(function() {
+      $("#formdialog").dialog("open");
+    }); 
+   
+   
+    $("#chgdp").click(function() {
+      $("#uploaddialog").dialog("open");
+    });    
 });
 
   </script>
-  <style>
-
-  
-  </style>
 </head>
-<body style="background-image:url(/images/bgimg.jpg); background-size:contain; background-repeat:no-repeat;">
-<div>
-<div class="heada"><h3>Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3></div>
-	<div class="row" style="padding-left:5%; text-align: center;">
-
-    	<div class="col-sm-4" style=" border-radius:5px; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);  width:25%; margin-right:5%; height:270px; box-shadow:; padding: 5px; margin-top:5%;">
-      <img src="images/bgimg.fw.png" width="100px" height="100px" style="border:1px solid green; border-radius:10px;"><br>
-	<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-      <p> Welcome <b id="userd"></b> to ideabox </p>
-        <h4> Profile </h4>
+<body style="background:#f4f8f8; background-size:contain; background-repeat:no-repeat; padding:0px magin:0px;">
+<header>
+	<h3 style="display:inline; margin-left:25%; margin-top:5%; font-size:38px; color:green;">Ideabox<img src="/images/logo.gif" width="50px" height="50px" /></h3>
+    <h3 style="display:inline; float:right;">
+    <button class="btn btn-success">My Ideas</button>&nbsp;&nbsp;
+    <button class="btn btn-success opendialog">Add an Idea</button>&nbsp;&nbsp;
+    <a href="/logout" ><button class="btn btn-success">Log Out</button></a>
+    </h3>
+</header>
+	<div>
+		
+			<div class="row" style="padding-left:5%;">
+			<div class=""></div>
+    		<div class="" id="profilewrap"><br>
+      			<img src="images/bgimg.fw.png" width="100px" height="100px"><br>
+				<i class="fa fa-pencil-square-o" aria-hidden="true" id="chgdp"></i>
+      			<p> Hi <b id="userd"></b> </p>
+        		<h4> Profile </h4>
+        		<div style="text-align:center;">
+                	<button class="btn btn-success">My Ideas</button>&nbsp;&nbsp;
+                    <button class="btn btn-success opendialog">Add an Idea</button>&nbsp;&nbsp;
+                    <a href="/logout" ><button class="btn btn-success">Log Out</button></a>
+                 </div>
+                 <div style="text-align:center;">
+                 	<h5>Quotes</h5>
+                  <blockquote>
+                	<div id="displayq">
+                    	Great minds discuss ideas; average minds discuss events; small minds discuss people. Eleanor Roosevelt
+                    </div>
+                    </blockquote>
+                 </div>                 
+        	</div>
+     <div class="" style="width:50%; margin-left:35%; margin-top:9%; background:#FFF;">
+        	<h2 style="color:green; text-align:center; background:#f4f8f8; border:1px solid #FFF;"> Idea Board </h2>
+        	<div id="displayIdeas">
         
+        	</div>
+        	<div>
+        		<img src="images/tumblr_nak5muSmwi1r2geqjo1_500.gif" width="200px" height="200px" />
         
-        
-        <div style="text-align:center;"><button class="btn btn-success">My Ideas</button>&nbsp;&nbsp;<button id="opendialog" class="btn btn-success">Add an Idea</button>&nbsp;&nbsp;<a href="/logout" ><button class="btn btn-success">Log Out</button></a></div>
-        </div>
-        <div class="col-sm-7" style="width:60%">
-        <h4> Ideas Board </h4>
-        <div id="displayIdeas">
-        
-        </div>
-        <div>
-        	<img src="images/tumblr_nak5muSmwi1r2geqjo1_500.gif" width="200px" height="200px" />
-        
-        </div>
-
-        
-        
-        </div>
-    
-    
+        	</div>
+			</div>
     </div>
-
-    
-    <div class="formcont" style=" margin-top:0px; margin-left:0px; width:500px; " id="formdialog" title=" Add an Idea ">
-  <form method="post" action="/addidea/" class="userform" style="width:100%; ">
-    <h4> <a href="/" ><b style="float:left;" class="activea"></b></a> </h4> <br><br>
-      <div class="form-group">
-    <input type="text" name="title" id="title" placeholder="Title" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <select class="form-control" id="category" name="category" required>
-              <option>Category</option>
-              <option>Technology</option>
-              <option>Music</option>
-              <option>Business</option>
-          </select>
-        </div>
-        <div class="form-group">
-        <textarea name="description" id="description" class="form-control" required> Description </textarea>
-        </div>
-        <input type="hidden" name="title" id="usertoken" placeholder="Title" class="form-control" required>
-        <div class="form-group">
-    <input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="addbtn" disabled>
-        </div>
-  </form>
+	<div class="formcont" style=" margin-top:0px; margin-left:0px; width:500px; " id="formdialog" title=" Add an Idea ">
+  		<form method="post" action="/addidea/" class="userform" style="width:100%; ">
+    		<h4> <a href="/" ><b style="float:left;" class="activea"></b></a> </h4> <br><br>
+      		<div class="form-group">
+    			<input type="text" name="title" id="title" placeholder="Title" class="form-control" required>
+        	</div>
+        	<div class="form-group">
+          		<select class="form-control" id="category" name="category" required>
+                  <option>Category</option>
+                  <option>Technology</option>
+                  <option>Music</option>
+                  <option>Business</option>
+          		</select>
+        	</div>
+        	<div class="form-group">
+        		<textarea name="description" id="description" class="form-control" required> Description </textarea>
+        	</div>
+        	<input type="hidden" name="title" id="usertoken" placeholder="Title" class="form-control" required>
+        	<div class="form-group">
+    			<input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="addbtn" disabled>
+        	</div>
+  		</form>
+    </div>
+    <div class="formcont" style=" margin-top:0px; margin-left:0px; width:500px; " id="uploaddialog" title=" Upload Your Profile Picture ">
+  		<form method="post" action="/addidea/" class="userform" style="width:100%; ">
+    		
+      		<div class="form-group">
+    			<input type="file" name="title" id="title" placeholder="Title" class="form-control" required>
+        	</div>
+        	<input type="hidden" name="title" id="usertoken" placeholder="Title" class="form-control" required>
+        	<div class="form-group">
+    			<input type="submit" name="submit" value="Add" class="form-control btn btn-success" id="profilebtn">
+        	</div>
+  		</form>
     </div>
    
-    </div>
+   </div>
 </div>
-<script>	
-  // Add idea dialog box
-	$("#addbtn").click(function(e){
-    	event.preventDefault(e);
-      var title = $("#title").val();
-      var category = $("#category").val();
-	    var description = $("#description").val();
-      var userToken = $("#usertoken").val(); 
-      var time = new Date();  
-        $.post('/addidea/',{title:title,category:category,description:description,usertoken:userToken, time:time}, function(r){
-			
-          alert(r);
-		  window.location ='/idea';
-          
-        });
-		
-		$("#formdialog").dialog('close');
+<div style="text-align:center;">
+	<h6> &copy; 2017 EmaEvidence </h6>
+</div>
+<script type="text/javascript" src="js/idea.js"></script>
+<script type="text/javascript">
 
-    });
-  // Add idea dialog box
-  //validating idea dialog box
-	function valid(){
-		var title = $("#title").val();
-    var category = $("#category").val();
-	  var description = $("#description").val();
-		if ((title != " " && category != " ") && (description != " "))
-		{
-			$("#addbtn").removeAttr("disabled");
-		}
-		else{
-			$("#addbtn").attr("disable",true);
-		}
-	}
-	$("#title").blur( function (){
-		valid();
-	});
-	$("#category").change( function (){
-		valid();
-	});
-	$("#description").keypress( function (){
-		valid();
-	});
-	$("#description").blur( function (){
-		valid();
-	});
-  
-//validating idea dialog box
-
-//getting ideas
-
-
-//getting ideas
-function getUser(i){
- $.post('/getuser',{tok:i},function(res){
-        var keey = Object.keys(res);
-        var userKey = res[keey];
-        var phone = userKey["phone"];
-        var name = userKey["username"];
-        document.getElementById('userd').innerHTML = name;
-      });
+  function quoteGetter() {
+  let quotes = ["Great minds discuss ideas; average minds discuss events; small minds discuss people. Eleanor Roosevelt","No matter what people tell you, words and ideas can change the world. Robin Williams","For good ideas and true innovation, you need human interaction, conflict, argument, debate. Margaret Heffernan","Wit is the sudden marriage of ideas which, before their union, were not perceived to have any relation. Mark Twain","I would ask my parents something, but then go to my siblings. We were encouraged to bounce ideas off everyone. Ahmet Zappa","Ideas are more powerful than guns. We would not let our enemies have guns, why should we let them have ideas. Joseph Stalin"];
+  let randomNum = Math.floor(Math.random() * 7);
+  const quoteNow = (quotes[randomNum]);
+  $('#displayq').html(quoteNow);  
 }
-getUser(i);
-	  function getIdeas(){
-$.post('/getideas',{},function(res){
-		var cont = "";
-		var objectKeys = Object.keys(res);
-		var objectLength = objectKeys.length;
-		var v = 1;
-		for (a =0; a < objectLength; a++){
-			var b = objectKeys[a];
-			cont = res[b];
-			var title,date,upv,downv,desc,cat,downv,comm;
-			Object.keys(cont).forEach(function(key) {
-				if(key == "title"){
-					title = cont[key];					
-				}
-				else if(key == "date")
-				{
-					date = cont[key];	
-				}
-				else if(key == "upvote"){
-					upv = cont[key];
-				}
-				else if(key == "description"){
-					desc = cont[key];
-					}
-				else if(key == "category"){
-					cat = cont[key];
-					}
-				else if(key == "downvote"){
-					downv = cont[key];
-					}
-				else if(key == "comment"){
-					comm = cont[key];	
-					}
-				else {
-					var id = cont[key];
-					$.post('/ideaposter',{tok:id},function(res){
-					var keey = Object.keys(res);
-					var userKey = res[keey];
-					var phone = userKey["phone"];
-					var name = userKey["username"];					
-				  });
-				}
-			});
-      var display = "<div class='ideacont' style=''><h3 class='ideatitle'>" +title+ "</h3><div class='well well-lg ideadesc'>"+desc+ "</div><i><h6 class='ideadetails'>"+cat+ ", "+date+" by "+ name  +"</h6></i><div><button class='btn-sm btn-success ideauvote' onclick='upvote("+v+","+upv+")' >Upvotes "+ upv+ "</button>&nbsp;<button class='btn-sm btn-warning ideadvote' onclick='downvote("+v+","+downv+")'id='dwv"+v+"'>Downvotes "+ downv+ "</button></div><div class='ideacomment'>"+comm+"</div><div class='newcomment'><textarea class='form-control' id='addcomm"+v+"'></textarea><br><button class='btn-sm btn-warning' onclick='addComment("+v+")' >Add Comment</button></div></div><input type='hidden' value='"+b+"' id='ideaid"+v+"'"+ b;
-        document.getElementById('displayIdeas').innerHTML += display +"<br>";
-			
-			v++;	
-			  
-		}
-			      
-        
+setInterval(quoteGetter, 5000);
 
-      });
-	  }
-	  getIdeas();
-	  function upvote(a,b){
-		 var ideaId = $("#ideaid"+a).val();
-		 b +=1;
-	  $.post('/vote',{v:'up',ideaId:ideaId,vote:b},function(r){
-		  alert(r);
-		  if(r =="voted"){
-			 window.location = '/idea'; 
-		  }
-		  
-	  });
-	  };
-	  function downvote(a,b){
-		 var ideaId = $("#ideaid"+a).val();
-		 b +=1
-	  $.post('/vote',{v:'down',ideaId:ideaId,vote:b},function(r){
-		  alert(r);
-		   window.location = '/idea'; 
-		  
-	  });
-	  };
-//function to add Comment
- function addComment(v){
-	 var comment = $("#addcomm"+v).val();
-	 var ideaId = $("#ideaid"+v).val();
-	 var date = new Date();
-	 $.post('/addcomment',{comment:comment,ideaId:ideaId,date:date},function(res){
-		 alert (res);
-		 window.location='/idea';
-		 
-	 });
-	 
-	 
- }
 </script>
 </body>
 </html>

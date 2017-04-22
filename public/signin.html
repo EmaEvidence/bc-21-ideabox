@@ -20,8 +20,12 @@
 
 <div class="heada" ><h3>Ideabox<img src="images/logo.gif" width="50px" height="50px" /></h3></div>
 
-
-<div class="formcont">
+	<div style="text-align:center; margin-top:3%;">
+    <h4> Welcome </h4>
+    <h5>Do you Have an Idea? Recieve a free Feasibility Study on it. Add your ideas and recieve mentorship from great minds.</h5>
+    </div>
+	<div>
+	<div class="formcont">
 	<div>
 	<form method="post" action="" class="userform" id="#form">
     <h4> <a href="/"><b style="float:left;">Sign Up</b></a> <a href="/signin"><b style="float:right;"  class="activea">Sign In</b></a></h4> <br><br>
@@ -32,7 +36,7 @@
         <input type="password" name="password" placeholder="Password" id="password" class="form-control" required>
         </div>
         <div class="alert alert-danger" role="alert" id="errbox">
-        <span id='err' style=" margin-left:8%; font-size:18px; color: red; text-align:center;"></span>
+        <span id='err'></span>
         </div>
 
         <div class="form-group">
@@ -40,13 +44,20 @@
         </div>
         <a href="/passreset"><b> Forgot your password? </b></a>
 	</form>
+
+</div>
+    </div>
+</div><br><br><br><br>
+<div style="text-align:center;">
+	<h6> &copy; 2017 EmaEvidence </h6>
+</div>
   <script type="text/javascript">
     $("#btn").click(function(e){
     	event.preventDefault(e);
-		$("#err").html("<img src='images/bgLoad.gif' width='100' height='15'>");
+		$("#err").html("<img src='images/bgLoad.gif' width='250' height='15'>");
 		 $("#errbox").show();
-      var email = $("#email").val();
-      var password = $("#password").val();
+      const email = $("#email").val();
+      const password = $("#password").val();
         $.post('/processsignin/',{email:email,password:password}, function(r){
           //alert(r);
           if (r == "auth/wrong-password" || r == "auth/user-not-found" ){
@@ -58,18 +69,19 @@
          $("#errbox").show();
 			   $("#err").html("Password or Email empty !!!");
 		  }
+        else if (r == "auth/network-request-failed"){
+              $("#errbox").show();
+              $("#err").html("Login Failed!!! You system is not connected to the internet");
+        }
           else{
               alert ("Login Successful");
               window.localStorage.setItem('userid', r);
-            window.location = 'idea';
+              window.location = 'idea';
           }
         } );
 
     });
   
   </script>
-</div>
-    </div>
-</div>
 </body>
 </html>
