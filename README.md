@@ -21,4 +21,5 @@ The functionality of this web app being a node.js app depends on the following n
 * Install the dependencies.
 * Create a database on Firebase.
 * Run the application.
+* Checkout the Hosted version [here](https://bc21-ideabox.herokuapp.com/)
 
