@@ -32,11 +32,13 @@
 		app.use(express.static('public'));
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: true }));
+		app.set('view engine', 'pug')
 		app.set('port', process.env.PORT || 3000);
 
 //routng for gets
 		app.get('/',function (req,res) {
-			res.sendFile(path.join(__dirname+'/public/index.html'))	;
+			//res.sendFile(path.join(__dirname+'/public/index.html'))	;
+			res.render('index',{ title: 'Hey Hey Hey!', message: 'Yo Yo'});
 		});
 
 
